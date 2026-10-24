@@ -1,0 +1,4 @@
+import {readFile} from 'node:fs/promises';import assert from 'node:assert/strict';import {evaluate} from '../oracledrill-scenario-engine/index.mjs';import {policy} from '../oracledrill-fixtures/index.mjs';
+const e=JSON.parse(await readFile(new URL('./testnet-evidence.json',import.meta.url)));const names={10:'STALE',9:'FUTURE',7:'WRONG_DECIMALS',12:'DIVERGENCE'};
+for(const c of e.cases){let now=BigInt(c.report.timestamp);if(c.id==='stale')now+=3600n;if(c.id==='future')now-=3600n;const actual=evaluate(c.report,policy,c.reference,now.toString());assert.equal(actual.code,c.expectedError?names[c.expectedError]:'OK');assert.equal(c.guarded.success,!c.expectedError);assert.equal(c.unsafe.value,c.report.answer)}
+assert.equal(e.cases.length,5);console.log('Five recorded mock scenarios match the model at their fixture observation times; this offline replay does not re-execute consensus.');
