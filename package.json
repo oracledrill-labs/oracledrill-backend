@@ -1,0 +1,17 @@
+{
+  "name": "@oracledrill/backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test test.mjs",
+    "start": "node --env-file-if-exists=.env server.mjs"
+  },
+  "dependencies": {
+    "@stellar/stellar-sdk": "17.3.0"
+  }
+}
